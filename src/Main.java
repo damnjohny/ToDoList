@@ -25,7 +25,7 @@ public class Main {
 
     private static void deleteAllTasksFromTempFile(File temp) {
         try {
-            Files.readAllLines(temp.toPath()).clear();
+            Files.delete(temp.toPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,28 +50,29 @@ public class Main {
         }
 
         fillingListOfTasks(temp.toFile());
-
-        System.out.println("1. Add task");
-        System.out.println("2. Delete task");
-        System.out.println("3. Show tasks");
-        System.out.println("4. Clear all tasks");
-        System.out.println("5. Close the program");
-
         while (true) {
-            System.out.println("Enter ur choice");
+            System.out.println("/ ***** MENU ***** /");
+            System.out.println("1. Add task");
+            System.out.println("2. Delete task");
+            System.out.println("3. Show tasks");
+            System.out.println("4. Clear all tasks");
+            System.out.println("5. Close the program");
+            System.out.println("/ **************** /");
+            System.out.print("Enter ur choice: ");
+
             Scanner ip = new Scanner(System.in);
-            int num = ip.nextInt();
-            ip.close();
+            String num = ip.nextLine();
+
             switch (num) {
-                case 1: // adding new task
+                case "1": // adding new task
                     Scanner sc = new Scanner(System.in);
-                    System.out.println("Enter task");
+                    System.out.print("Enter task: ");
                     String task = sc.nextLine();
                     toDo.add(task);
                     save(task, temp.toFile());
                     break;
-                case 2: // deleting the task with entered index
-                    System.out.println("Enter number of task");
+                case "2": // deleting the task with entered index
+                    System.out.print("Enter number of task: ");
                     Scanner scan = new Scanner(System.in);
                     int number = scan.nextInt();
                     if (number > toDo.size()) {
@@ -81,9 +82,9 @@ public class Main {
                         toDo.remove(number - 1); // for deleting tasks from "0", not from "1"
                         break;
                     }
-                case 3: // shows all tasks
+                case "3": // shows all tasks
                     if (toDo.isEmpty()) {
-                        System.out.println("Still empty!");
+                        System.out.println(System.lineSeparator() + "Still empty!".toUpperCase() + System.lineSeparator());
                     } else {
                         for (int i = 0; i < toDo.size(); i++) {
                             System.out.println(i + 1 + "." + " " + toDo.get(i)); // showing index of task from "1" instead of "0"
@@ -91,14 +92,14 @@ public class Main {
                         }
                     }
                     break;
-                case 4: // deleting all the tasks from list and temp file
+                case "4": // deleting all the tasks from list and temp file
                     System.out.println("Are you sure you want to delete all the tasks?");
-                    System.out.println("Print 'y' to agree or 'n' to disagree");
+                    System.out.print("Print 'y' to agree or 'n' to disagree: ");
                     Scanner scanner = new Scanner(System.in);
                     String answer = scanner.nextLine();
                     if (answer.equals("y")) {
-                        deleteAllTasksFromList();
                         deleteAllTasksFromTempFile(temp.toFile());
+                        deleteAllTasksFromList();
                         break;
                     } else if (answer.equals("n")) {
                         break;
@@ -106,16 +107,17 @@ public class Main {
                         System.out.println("Wrong answer!");
                         continue;
                     }
-                case 5:
+                case "5":
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Enter proper choice");
+                    System.out.println("Enter proper choice!");
                     System.out.println("1. Add task");
                     System.out.println("2. Delete task");
                     System.out.println("3. Show tasks");
                     System.out.println("4. Clear all tasks");
                     System.out.println("5. Close the program");
+                    System.out.print("Enter ur choice: ");
             }
         }
     }
