@@ -44,7 +44,7 @@ public class ToDoList {
                         clearConsole();
                         break;
                     } else {
-                        System.out.println("Wrong answer!");
+                        System.out.println("WRONG ANSWER!");
                         clearConsole();
                         continue;
                     }
