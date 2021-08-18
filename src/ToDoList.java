@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ToDoList {
-    private static ArrayList<String> toDo = new ArrayList<>();
+    private static final ArrayList<String> toDo = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         Path temp = createTempFile();
@@ -17,13 +17,17 @@ public class ToDoList {
             switch (num) {
                 case "1": // adding new task to temp and list
                     addNewTask(temp);
+                    clearConsole();
                     break;
                 case "2": // deleting the task with entered index
                     boolean answer = deleteTask();
-                    if (answer) break;
-                    else continue;
+                    if (answer) {
+                        clearConsole();
+                        break;
+                    } else continue;
 
                 case "3": // shows all tasks
+                    clearConsole();
                     showAllTasks();
                     break;
                 case "4": // deleting all the tasks from list and temp file
@@ -34,18 +38,25 @@ public class ToDoList {
                     if (print.equals("y")) {
                         deleteAllTasksFromTempFile(temp.toFile());
                         deleteAllTasksFromList();
+                        clearConsole();
                         break;
                     } else if (print.equals("n")) {
+                        clearConsole();
                         break;
                     } else {
                         System.out.println("Wrong answer!");
+                        clearConsole();
                         continue;
                     }
-                case "5":
+                case "5": // exit from program
+                    clearConsole();
                     System.exit(0);
                     break;
                 default:
-                    defaultFunc(); // if choose wrong
+                    clearConsole();
+                    System.out.println("NO SUCH COMMAND! PLEASE TRY AGAIN.");
+                    System.out.println();
+                    //defaultFunc(); // if choose wrong command in menu
             }
         }
     }
@@ -95,19 +106,20 @@ public class ToDoList {
     }
 
     private static String printMenu() {
-        System.out.println("/ ***** MENU ***** /");
-        System.out.println("1. Add task");
-        System.out.println("2. Delete task");
-        System.out.println("3. Show tasks");
-        System.out.println("4. Clear all tasks");
-        System.out.println("5. Close the program");
-        System.out.println("/ **************** /");
+        System.out.println("********** MENU ***********");
+        System.out.println("*                         *");
+        System.out.println("*   1. Add task           *");
+        System.out.println("*   2. Delete task        *");
+        System.out.println("*   3. Show tasks         *");
+        System.out.println("*   4. Clear all tasks    *");
+        System.out.println("*   5. Close the program  *");
+        System.out.println("*                         *");
+        System.out.println("***************************");
         System.out.print("Enter ur choice: ");
 
         Scanner ip = new Scanner(System.in);
-        String num = ip.nextLine();
 
-        return num;
+        return ip.nextLine();
     }
 
     private static void addNewTask(Path temp) {
@@ -135,21 +147,21 @@ public class ToDoList {
         if (toDo.isEmpty()) {
             System.out.println(System.lineSeparator() + "Still empty!".toUpperCase() + System.lineSeparator());
         } else {
+            System.out.println("Your tasks:");
+            System.out.println();
             for (int i = 0; i < toDo.size(); i++) {
-                System.out.println(i + 1 + "." + " " + toDo.get(i)); // showing index of task from "1" instead of "0"
+                System.out.println(i + 1 + ")" + " " + toDo.get(i)); // showing index of task from "1" instead of "0"
                 System.out.println();
             }
         }
     }
 
-    private static void defaultFunc() {
-        System.out.println("Enter proper choice!");
-        System.out.println("1. Add task");
-        System.out.println("2. Delete task");
-        System.out.println("3. Show tasks");
-        System.out.println("4. Clear all tasks");
-        System.out.println("5. Close the program");
-        System.out.print("Enter ur choice: ");
+    private static void clearConsole() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
