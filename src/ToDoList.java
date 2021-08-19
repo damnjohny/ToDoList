@@ -1,9 +1,6 @@
 import java.io.*;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ToDoList {
     private static final ArrayList<String> toDo = new ArrayList<>();
@@ -31,8 +28,8 @@ public class ToDoList {
                     showAllTasks();
                     break;
                 case "4": // deleting all the tasks from list and temp file
-                    System.out.println("Are you sure you want to delete all the tasks?");
-                    System.out.print("Print 'y' to agree or 'n' to disagree: ");
+                    System.out.println("Are you sure you want to delete all the tasks?".toUpperCase());
+                    System.out.print("Print 'y' to agree or 'n' to disagree: ".toUpperCase());
                     Scanner scanner = new Scanner(System.in);
                     String print = scanner.nextLine();
                     if (print.equals("y")) {
@@ -52,11 +49,10 @@ public class ToDoList {
                     clearConsole();
                     System.exit(0);
                     break;
-                default:
+                default: // if entered "no-case" value
                     clearConsole();
                     System.out.println("NO SUCH COMMAND! PLEASE TRY AGAIN.");
                     System.out.println();
-                    //defaultFunc(); // if choose wrong command in menu
             }
         }
     }
@@ -108,14 +104,14 @@ public class ToDoList {
     private static String printMenu() {
         System.out.println("********** MENU ***********");
         System.out.println("*                         *");
-        System.out.println("*   1. Add task           *");
-        System.out.println("*   2. Delete task        *");
-        System.out.println("*   3. Show tasks         *");
-        System.out.println("*   4. Clear all tasks    *");
-        System.out.println("*   5. Close the program  *");
+        System.out.println("*   1. ADD TASK           *");
+        System.out.println("*   2. DELETE TASK        *");
+        System.out.println("*   3. SHOW ALL TASKS     *");
+        System.out.println("*   4. CLEAR ALL TASKS    *");
+        System.out.println("*   5. CLOSE THE PROGRAM  *");
         System.out.println("*                         *");
         System.out.println("***************************");
-        System.out.print("Enter ur choice: ");
+        System.out.print("ENTER YOUR CHOOSE: ");
 
         Scanner ip = new Scanner(System.in);
 
@@ -124,18 +120,18 @@ public class ToDoList {
 
     private static void addNewTask(Path temp) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter task: ");
+        System.out.print("ENTER TASK: ");
         String task = sc.nextLine();
         toDo.add(task);
         save(task, temp.toFile());
     }
 
     private static boolean deleteTask() {
-        System.out.print("Enter number of task: ");
+        System.out.print("ENTER THE NUMBER OF THE TASK TO DELETE: ");
         Scanner scan = new Scanner(System.in);
         int number = scan.nextInt();
         if (number > toDo.size()) {
-            System.out.println("No task with that number");
+            System.out.println("NO TASK WITH THAT NUMBER");
             return false;
         } else {
             toDo.remove(number - 1); // for deleting tasks from "0", not from "1"
@@ -145,9 +141,9 @@ public class ToDoList {
 
     private static void showAllTasks() {
         if (toDo.isEmpty()) {
-            System.out.println(System.lineSeparator() + "Still empty!".toUpperCase() + System.lineSeparator());
+            System.out.println(System.lineSeparator() + "STILL EMPTY!".toUpperCase() + System.lineSeparator());
         } else {
-            System.out.println("Your tasks:");
+            System.out.println("YOUR TASKS:");
             System.out.println();
             for (int i = 0; i < toDo.size(); i++) {
                 System.out.println(i + 1 + ")" + " " + toDo.get(i)); // showing index of task from "1" instead of "0"
@@ -163,6 +159,4 @@ public class ToDoList {
             e.printStackTrace();
         }
     }
-
-
 }
