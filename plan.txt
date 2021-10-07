@@ -1,2 +1,0 @@
-1. set time to each tasks
-2. tabs on each task
